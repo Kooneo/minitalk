@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:04 by zbakour           #+#    #+#             */
-/*   Updated: 2024/12/29 20:27:31 by zbakour          ###   ########.fr       */
+/*   Updated: 2024/12/29 21:48:56 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 		decoded_char = (char)binary_to_int(bit_set);
 		if (decoded_char == '\0')
 		{
-			gettimeofday(&end_time, NULL); // Record end time
+			gettimeofday(&end_time, NULL); 
 			ft_printf("\nMessage received completely.\n");
 			seconds = end_time.tv_sec - start_time.tv_sec;
 			microseconds = end_time.tv_usec - start_time.tv_usec;
