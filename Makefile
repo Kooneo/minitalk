@@ -3,15 +3,12 @@ SERVER = server
 CLIENT = client
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
-
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 
 
 SERVER_SRC = server.c
-
 SERVER_OBJ = $(SERVER_SRC:.c=.o)
 
 CLIENT_SRC = client.c
-
 CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
 
 all: $(SERVER) $(CLIENT) 
@@ -27,14 +24,14 @@ $(LIBFT):
 	make -C $(LIBFT_DIR) bonus
 
 %.o: %.c
-	$(CC) -Wall -Wextra -Werror -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OFILES)
 	make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(CLIENT) $(SERVER)
 	make -C $(LIBFT_DIR) fclean
 
 re: fclean all

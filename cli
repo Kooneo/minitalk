@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   cli                                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:25 by zbakour           #+#    #+#             */
-/*   Updated: 2024/12/29 19:34:59 by zbakour          ###   ########.fr       */
+/*   Updated: 2024/12/29 19:19:02 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
 
-void	show_error(char *err)
+void	fail_signal(void)
 {
 	ft_putendl_fd("Error:", 2);
-	ft_putendl_fd(err, 2);
-	exit(1);
+	ft_putendl_fd("Fail Send The Signal.", 2);
 }
 
 void	send_char(int *cab, int pid)
@@ -29,12 +28,12 @@ void	send_char(int *cab, int pid)
 		if (cab[i] == 1)
 		{
 			if (kill(pid, SIGUSR1) == -1)
-				show_error("Failed to send the signal.");
+				fail_signal();
 		}
 		else if (cab[i] == 0)
 		{
 			if (kill(pid, SIGUSR2) == -1)
-				show_error("Failed to send the signal");
+				fail_signal();		
 		}
 		usleep(20000);
 		i--;
@@ -93,18 +92,20 @@ int	main(int argc, char **argv)
 		struct sigaction ack_signal;
 		ack_signal.sa_handler = acknowledgment_handler;
 		sigemptyset(&ack_signal.sa_mask);
-		ack_signal.sa_flags = SA_SIGINFO;
+		ack_signal.sa_flags = 0;
 		sigaction(SIGUSR1, &ack_signal, NULL);
 		sigaction(SIGUSR2, &ack_signal, NULL);
+
 		pid = ft_atoi(argv[1]);
-		if (pid < 0)
-			show_error("PID Can't be Negative Value.");
 		message = argv[2];
 		if (pid < 0 || message[0] == '\0')
 			return (1);
 		message_encryption(message, pid);
 	}
 	else
-		show_error("Usage: <PID> <MESSAGE>");
+	{
+		ft_putendl_fd("Error:", 2);
+		ft_putendl_fd("Usage: <PID> <MESSAGE>", 2);
+	}
 	return (0);
 }
