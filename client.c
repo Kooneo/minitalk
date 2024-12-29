@@ -6,17 +6,11 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:25 by zbakour           #+#    #+#             */
-/*   Updated: 2024/12/28 18:45:53 by zbakour          ###   ########.fr       */
+/*   Updated: 2024/12/29 18:15:49 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
-
-// void	print_bits(int *bits)
-// {
-// 	for (int j = 8 - 1; j >= 0; j--)
-// 		ft_printf("%d", bits[j]);
-// }
 
 void	send_char(int *cab, int pid)
 {
@@ -25,11 +19,11 @@ void	send_char(int *cab, int pid)
 	i = 7;
 	while (i >= 0)
 	{
-		if (cab[i])
+		if (cab[i] == 1)
 			kill(pid, SIGUSR1);
-		else
+		else if (cab[i] == 0)
 			kill(pid, SIGUSR2);
-		ft_printf("%d", cab[i]);
+		usleep(20000);
 		i--;
 	}
 }
@@ -62,19 +56,44 @@ void	message_encryption(char *msg, int pid)
 		ascii_to_bit(msg[i], pid);
 		i++;
 	}
+	ascii_to_bit('\0', pid);
+	// pause();
 }
 
-int main(int argc, char **argv)
+void	acknowledgment_handler(int signum)
 {
-	int     pid;
-	char    *message;
+	if (signum == SIGUSR2)
+		;
+	else if (signum == SIGUSR1)
+	{
+		ft_printf("Server acknowledged the message.\n");
+		exit(0);
+	}
+}
+
+int	main(int argc, char **argv)
+{
+	int pid;
+	char *message;
 
 	if (argc == 3)
 	{
+		struct sigaction ack_signal;
+		ack_signal.sa_handler = acknowledgment_handler;
+		sigemptyset(&ack_signal.sa_mask);
+		ack_signal.sa_flags = 0;
+		sigaction(SIGUSR1, &ack_signal, NULL);
+		sigaction(SIGUSR2, &ack_signal, NULL);
+
 		pid = ft_atoi(argv[1]);
 		message = argv[2];
-		if (pid < 0 || !message || message[0] == '\0')
+		if (pid < 0 || message[0] == '\0')
 			return (1);
 		message_encryption(message, pid);
+	} else
+	{
+		ft_putendl_fd("Error:", 2);
+		ft_putendl_fd("Usage: <PID> <MESSAGE>", 2);
 	}
+	return (0);
 }

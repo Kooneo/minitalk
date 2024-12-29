@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ser                                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:04 by zbakour           #+#    #+#             */
-/*   Updated: 2024/12/29 17:54:31 by zbakour          ###   ########.fr       */
+/*   Updated: 2024/12/29 14:59:47 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
             long microseconds = end_time.tv_usec - start_time.tv_usec;
             double elapsed = seconds + microseconds * 1e-6;
             printf("Runtime: %.6f seconds\n", elapsed);
-			kill(client_pid, SIGUSR1); // if (kill(???) == -1 write(2, "kill error", len))
+			kill(client_pid, SIGUSR1);
 			client_pid = 0;
 			index = 0;
 			return ;
@@ -76,7 +76,6 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 		write(1, &decoded_char, 1);
 		index = 0;
 	}
-	kill(client_pid, SIGUSR2);
 }
 
 int	main(void)
@@ -84,14 +83,14 @@ int	main(void)
 	struct sigaction signal_received;
 	signal_received.sa_sigaction = signal_handler;
 	sigemptyset(&signal_received.sa_mask);
-	signal_received.sa_flags = SA_SIGINFO;
+	signal_received.sa_flags = 0;
 
-	int i = 0;
-	while (i < 8)
-		bit_set[i++] = '0';
 	sigaction(SIGUSR1, &signal_received, NULL);
 	sigaction(SIGUSR2, &signal_received, NULL);
 	ft_printf("Server PID: %d\n", getpid());
+	int i = 0;
+	while (i < 8)
+		bit_set[i++] = 0;
 	while (1)
 	{
 		pause();

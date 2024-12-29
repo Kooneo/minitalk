@@ -6,13 +6,14 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:21:33 by zbakour           #+#    #+#             */
-/*   Updated: 2024/12/28 18:41:32 by zbakour          ###   ########.fr       */
+/*   Updated: 2024/12/28 20:11:30 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERVER_H
 # define SERVER_H
 
+#include <signal.h>
 # include "libft/libft.h"
 
 #endif
