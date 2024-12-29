@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:04 by zbakour           #+#    #+#             */
-/*   Updated: 2024/12/29 19:25:04 by zbakour          ###   ########.fr       */
+/*   Updated: 2024/12/29 20:27:31 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-char	bit_set[8];
+int	bit_set[8];
 static struct timeval start_time, end_time;
 
-int	binary_to_int(char *bit_set)
+int	binary_to_int(int *bit_set)
 {
 	int	decimal_value;
 	int	base;
@@ -28,7 +28,7 @@ int	binary_to_int(char *bit_set)
 	i = 7;
 	while (i >= 0)
 	{
-		if (bit_set[i] == '1')
+		if (bit_set[i] == 1)
 			decimal_value += base;
 		base = base * 2;
 		i--;
@@ -59,9 +59,9 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 		gettimeofday(&start_time, NULL);
 	}
 	if (signum == SIGUSR1)
-		bit_set[index] = '1';
+		bit_set[index] = 1;
 	else if (signum == SIGUSR2)
-		bit_set[index] = '0';
+		bit_set[index] = 0;
 	index++;
 	if (index == 8)
 	{
