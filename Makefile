@@ -5,13 +5,13 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 
 
-SERVER_SRC = server.c minitalk_utils.c
+SERVER_SRC = server.c
 SERVER_OBJ = $(SERVER_SRC:.c=.o)
 
-CLIENT_SRC = client.c minitalk_utils.c
+CLIENT_SRC = client.c 
 CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
 
-all: $(SERVER) $(CLIENT) 
+all: fclean $(SERVER) $(CLIENT) 
 
 $(SERVER): $(SERVER_OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(SERVER_OBJ) $(LIBFT) -o $(SERVER)
@@ -31,7 +31,7 @@ clean:
 	make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(CLIENT_OBJ) $(SERVER_OBJ)
+	rm -f $(CLIENT_OBJ) $(SERVER_OBJ) $(SERVER) $(CLIENT)
 	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
