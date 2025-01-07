@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:25 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/07 23:09:00 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/07 23:09:45 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	int_to_binary(int *bits, char c)
 void	send_char(char c, int *bits, pid_t pid)
 {
 	int_to_binary(bits, c);
-	
 	send_signals(bits, pid);
 }
 
