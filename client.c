@@ -6,17 +6,11 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:25 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/07 23:09:45 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/07 23:14:34 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-void	show_error(char *msg)
-{
-	ft_putendl_fd("Error:", 2);
-	ft_putendl_fd(msg, 2);
-}
 
 void	send_signals(int *cab, int pid)
 {
@@ -37,19 +31,6 @@ void	send_signals(int *cab, int pid)
 		}
 		usleep(2025);
 		i--;
-	}
-}
-
-void	int_to_binary(int *bits, char c)
-{
-	int	i;
-
-	i = 0;
-	while (i < 8)
-	{
-		bits[i] = c % 2;
-		c = c / 2;
-		i++;
 	}
 }
 
