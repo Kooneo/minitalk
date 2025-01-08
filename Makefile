@@ -17,7 +17,7 @@ SERVER_BONUS_OBJ = $(SERVER_BONUS_SRC:.c=.o)
 CLIENT_BONUS_SRC = client_bonus.c minitalk_utils_bonus.c
 CLIENT_BONUS_OBJ = $(CLIENT_BONUS_SRC:.c=.o)
 
-all: clean $(SERVER) $(CLIENT) 
+all: fclean $(SERVER) $(CLIENT) 
 
 $(SERVER): $(SERVER_OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(SERVER_OBJ) $(LIBFT) -o $(SERVER)

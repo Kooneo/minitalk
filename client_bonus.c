@@ -1,64 +1,79 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:25 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/07 23:14:34 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/08 20:19:36 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	send_signals(int *cab, int pid)
+void	send_signals(unsigned char byte, int pid)
 {
 	int	i;
 
 	i = 7;
 	while (i >= 0)
 	{
-		if (cab[i] == 1)
-		{
-			if (kill(pid, SIGUSR1) == -1)
-				show_error("Failed to send the signal.");
-		}
-		else
-		{
-			if (kill(pid, SIGUSR2) == -1)
-				show_error("Failed to send the signal.");
-		}
-		usleep(2025);
+		if ((byte >> i) & 1)
+        {
+            if (kill(pid, SIGUSR1) == -1)
+                show_error("Failed to send the signal.");
+        }
+        else
+        {
+            if (kill(pid, SIGUSR2) == -1)
+                show_error("Failed to send the signal.");
+        }
+		usleep(20205);
 		i--;
 	}
 }
 
-void	send_char(char c, int *bits, pid_t pid)
+void print_bits_reverse(int *bits, int size)
 {
-	int_to_binary(bits, c);
-	send_signals(bits, pid);
+    for (int i = size - 1; i >= 0; i--)
+    {
+        if (bits[i])
+            write(1, "1", 1);
+        else
+            write(1, "0", 1);
+    }
+    write(1, "\n", 1);
 }
+
+// void	send_char(char c, int *bits, pid_t pid)
+// {
+// 	int_to_binary(bits, c);
+// 	print_bits_reverse(bits, 8);
+// 	write(1, "\n", 1);
+// 	// send_signals(bits, pid);
+// }
 
 void	message_encryption(char *msg, int pid)
 {
-	size_t	i;
-	int		bits[8];
+	size_t i;
 
-	i = 0;
-	while (i < ft_strlen(msg))
-	{
-		send_char(msg[i], bits, pid);
-		i++;
-	}
-	send_char('\n', bits, pid);
-	send_char('\0', bits, pid);
+    i = 0;
+    while (msg[i])
+    {
+        send_signals((unsigned char)msg[i], pid);
+        i++;
+    }
+    send_signals('\n', pid);
+    send_signals('\0', pid);
 }
 
 void	signal_handler(int signum)
 {
 	if (signum == SIGUSR2)
 		;
+	else if (signum == SIGUSR1)
+		ft_printf("\nMessage sent and received successfully!\n");
 }
 
 int	main(int argc, char **argv)
@@ -69,6 +84,7 @@ int	main(int argc, char **argv)
 	if (argc == 3)
 	{
 		signal(SIGUSR2, signal_handler);
+		signal(SIGUSR1, signal_handler);
 		pid = ft_atoi(argv[1]);
 		if (pid < 0)
 			show_error("PID Can't be Negative Value.");

@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:25 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/07 23:14:34 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/08 16:52:31 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	send_signals(int *cab, int pid)
 			if (kill(pid, SIGUSR2) == -1)
 				show_error("Failed to send the signal.");
 		}
-		usleep(2025);
+		usleep(20205);
 		i--;
 	}
 }
