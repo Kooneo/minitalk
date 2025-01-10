@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:04 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/07 23:42:16 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/09 22:42:16 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 		decoded_char = 0;
 	}
 	if (kill(client_pid, SIGUSR2) == -1)
-		show_error("Failed to send signal");
+		show_error("⛔ Failed to send signal");
 }
 
 int	main(void)
@@ -62,7 +62,7 @@ int	main(void)
 	ft_bzero(g_bit_set, sizeof(g_bit_set));
 	sigaction(SIGUSR1, &signal_received, NULL);
 	sigaction(SIGUSR2, &signal_received, NULL);
-	ft_printf("Server PID: %d\n", getpid());
+	ft_printf("🚀 Server PID: %d\n", getpid());
 	while (1)
 	{
 		pause();

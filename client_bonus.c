@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:25 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/08 20:19:36 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/09 22:46:44 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,17 @@ void	send_signals(unsigned char byte, int pid)
 		if ((byte >> i) & 1)
         {
             if (kill(pid, SIGUSR1) == -1)
-                show_error("Failed to send the signal.");
+                show_error("⛔ Failed to send the signal.");
         }
         else
         {
             if (kill(pid, SIGUSR2) == -1)
-                show_error("Failed to send the signal.");
+                show_error("⛔ Failed to send the signal.");
         }
 		usleep(20205);
 		i--;
 	}
 }
-
-void print_bits_reverse(int *bits, int size)
-{
-    for (int i = size - 1; i >= 0; i--)
-    {
-        if (bits[i])
-            write(1, "1", 1);
-        else
-            write(1, "0", 1);
-    }
-    write(1, "\n", 1);
-}
-
-// void	send_char(char c, int *bits, pid_t pid)
-// {
-// 	int_to_binary(bits, c);
-// 	print_bits_reverse(bits, 8);
-// 	write(1, "\n", 1);
-// 	// send_signals(bits, pid);
-// }
 
 void	message_encryption(char *msg, int pid)
 {
@@ -73,7 +53,7 @@ void	signal_handler(int signum)
 	if (signum == SIGUSR2)
 		;
 	else if (signum == SIGUSR1)
-		ft_printf("\nMessage sent and received successfully!\n");
+		ft_printf("\n✅ Message sent and received successfully!\n");
 }
 
 int	main(int argc, char **argv)
@@ -87,13 +67,13 @@ int	main(int argc, char **argv)
 		signal(SIGUSR1, signal_handler);
 		pid = ft_atoi(argv[1]);
 		if (pid < 0)
-			show_error("PID Can't be Negative Value.");
+			show_error("⛔ PID Can't be Negative Value.");
 		message = argv[2];
 		if (pid < 0 || message[0] == '\0')
 			return (1);
 		message_encryption(message, pid);
 	}
 	else
-		show_error("Usage: <PID> <MESSAGE>");
+		show_error("🚀 Usage: <PID> <MESSAGE>");
 	return (0);
 }
