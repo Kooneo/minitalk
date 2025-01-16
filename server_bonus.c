@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:04 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/09 22:44:20 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/14 18:39:02 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	main(void)
 	struct sigaction	signal_received;
 
 	signal_received.sa_sigaction = signal_handler;
-	sigemptyset(&signal_received.sa_mask);
 	signal_received.sa_flags = SA_SIGINFO;
 	ft_bzero(g_bit_set, sizeof(g_bit_set));
 	sigaction(SIGUSR1, &signal_received, NULL);

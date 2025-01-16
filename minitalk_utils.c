@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:10:45 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/09 22:48:07 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/16 19:45:17 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	show_error(char *msg)
 {
 	ft_putendl_fd("Error:", 2);
 	ft_putendl_fd(msg, 2);
+	exit(1);
 }
 
 void	int_to_binary(int *bits, char c)

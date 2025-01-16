@@ -1,23 +1,26 @@
 CC = cc
 SERVER = server
 CLIENT = client
+SERVER_BONUS = server_bonus
+CLIENT_BONUS = client_bonus
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 
-
-SERVER_SRC = server.c minitalk_utils.c
+UTILS_SRC = minitalk_utils.c
+SERVER_SRC = server.c $(UTILS_SRC)
 SERVER_OBJ = $(SERVER_SRC:.c=.o)
 
-CLIENT_SRC = client.c minitalk_utils.c
+CLIENT_SRC = client.c $(UTILS_SRC)
 CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
 
-SERVER_BONUS_SRC = server_bonus.c minitalk_utils_bonus.c
+# Bonus
+SERVER_BONUS_SRC = server_bonus.c $(UTILS_SRC)
 SERVER_BONUS_OBJ = $(SERVER_BONUS_SRC:.c=.o)
 
-CLIENT_BONUS_SRC = client_bonus.c minitalk_utils_bonus.c
+CLIENT_BONUS_SRC = client_bonus.c $(UTILS_SRC)
 CLIENT_BONUS_OBJ = $(CLIENT_BONUS_SRC:.c=.o)
 
-all: fclean $(SERVER) $(CLIENT) 
+all: $(SERVER) $(CLIENT) 
 
 $(SERVER): $(SERVER_OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(SERVER_OBJ) $(LIBFT) -o $(SERVER)
@@ -25,12 +28,11 @@ $(SERVER): $(SERVER_OBJ) $(LIBFT)
 $(CLIENT): $(CLIENT_OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(CLIENT_OBJ) $(LIBFT) -o $(CLIENT)
 
-server_bonus: $(SERVER_BONUS_OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(SERVER_BONUS_OBJ) $(LIBFT) -o server_bonus
+$(SERVER_BONUS): $(SERVER_BONUS_OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) $(SERVER_BONUS_OBJ) $(LIBFT) -o $(SERVER_BONUS)
 
-client_bonus: $(CLIENT_BONUS_OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(CLIENT_BONUS_OBJ) $(LIBFT) -o client_bonus
-
+$(CLIENT_BONUS): $(CLIENT_BONUS_OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) $(CLIENT_BONUS_OBJ) $(LIBFT) -o $(CLIENT_BONUS)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR) 
@@ -39,14 +41,14 @@ $(LIBFT):
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: server_bonus client_bonus
+bonus: $(SERVER_BONUS) $(CLIENT_BONUS)
 
 clean:
 	rm -f $(CLIENT_OBJ) $(SERVER_OBJ) $(SERVER_BONUS_OBJ) $(CLIENT_BONUS_OBJ)
 	make -C $(LIBFT_DIR) clean
 
 fclean: clean
-	rm -f $(SERVER) $(CLIENT) client_bonus server_bonus
+	rm -f $(SERVER) $(CLIENT) $(SERVER_BONUS) $(CLIENT_BONUS)
 	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
