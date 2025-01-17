@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 23:10:45 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/16 19:45:17 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/17 13:00:04 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,6 @@ void	show_error(char *msg)
 	ft_putendl_fd("Error:", 2);
 	ft_putendl_fd(msg, 2);
 	exit(1);
-}
-
-void	int_to_binary(int *bits, char c)
-{
-	int	i;
-
-	i = 0;
-	while (i < 8)
-	{
-		bits[i] = c % 2;
-		c = c / 2;
-		i++;
-	}
 }
 
 int	binary_to_int(char *bit_set)

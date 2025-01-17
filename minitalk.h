@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 18:43:58 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/07 23:19:51 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/17 13:00:09 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <unistd.h>
 
 void	show_error(char *msg);
-void	int_to_binary(int *bits, char c);
 int		binary_to_int(char *bit_set);
 
 #endif
