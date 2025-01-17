@@ -6,7 +6,7 @@
 /*   By: zbakour <zbakour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:20:04 by zbakour           #+#    #+#             */
-/*   Updated: 2025/01/14 18:39:02 by zbakour          ###   ########.fr       */
+/*   Updated: 2025/01/17 13:04:28 by zbakour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ void	update_bit_set(int signum, int *index)
 	else if (signum == SIGUSR2)
 		g_bit_set[*index] = '0';
 	(*index)++;
+}
+
+void	reset_values(int *index, char *decoded_char)
+{
+	ft_bzero(g_bit_set, sizeof(g_bit_set));
+	*index = 0;
+	*decoded_char = 0;
 }
 
 void	signal_handler(int signum, siginfo_t *info, void *context)
@@ -46,9 +53,7 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 			return ;
 		}
 		write(1, &decoded_char, 1);
-		ft_bzero(g_bit_set, sizeof(g_bit_set));
-		index = 0;
-		decoded_char = 0;
+		reset_values(&index, &decoded_char);
 	}
 	if (kill(client_pid, SIGUSR2) == -1)
 		show_error("⛔ Failed to send signal");
